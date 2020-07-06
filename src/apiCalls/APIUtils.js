@@ -2,27 +2,13 @@ import axios from "axios";
 import { API_PATH, LAPISHAGROUP_API_PATH } from "./constants";
 
 class ApiUtils {
-  // signup(userData) {
-  //   return axios({
-  //     method: "post",
-  //     url: `${API_PATH}/signup.php`,
-  //     headers: { "content-type": "application/json" },
-  //     data: userData,
-  //   });
-  // }
-
   signup(userData) {
-    // return axios({
-    //   method: "post",
-    //   url: `${API_PATH}/signup.php`,
-    //   headers: { "Content-type": "application/json" },
-    //   data: userData,
-    // });
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: "myspecialpassword",
-    };
-    return axios.post(API_PATH + "/signup.php", userData);
+    return axios({
+      method: "post",
+      url: `${API_PATH}/signup.php`,
+      headers: { "content-type": "application/json" },
+      data: userData,
+    });
   }
 
   login(userCrednetials) {
