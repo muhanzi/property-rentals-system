@@ -14,8 +14,8 @@ const AppRoutes = () => {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         {/* protected route // to access home page user must be logged in */}
-        {/* <PrivateRoute exact path="/home" component={HomePage} /> */}
-        <Route exact path="/home" component={HomePage} />
+        <PrivateRoute exact path="/home" component={HomePage} />
+        {/* <Route exact path="/home" component={HomePage} /> */}
         <Route component={WrongUrl} />
       </Switch>
       <Footer />

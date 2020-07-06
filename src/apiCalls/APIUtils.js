@@ -2,13 +2,27 @@ import axios from "axios";
 import { API_PATH, LAPISHAGROUP_API_PATH } from "./constants";
 
 class ApiUtils {
+  // signup(userData) {
+  //   return axios({
+  //     method: "post",
+  //     url: `${API_PATH}/signup.php`,
+  //     headers: { "content-type": "application/json" },
+  //     data: userData,
+  //   });
+  // }
+
   signup(userData) {
-    return axios({
-      method: "post",
-      url: `${API_PATH}/signup.php`,
-      headers: { "content-type": "application/json" },
-      data: userData,
-    });
+    // return axios({
+    //   method: "post",
+    //   url: `${API_PATH}/signup.php`,
+    //   headers: { "Content-type": "application/json" },
+    //   data: userData,
+    // });
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: "myspecialpassword",
+    };
+    return axios.post(API_PATH + "/signup.php", userData);
   }
 
   login(userCrednetials) {
@@ -16,7 +30,7 @@ class ApiUtils {
     axios({
       method: "post",
       url: `${API_PATH}/signin.php`,
-      headers: { "content-type": "application/json" },
+      headers: { "Content-type": "application/json" },
       data: userCrednetials,
     })
       .then((response) => {
@@ -36,12 +50,12 @@ class ApiUtils {
   }
 
   getCurrentUser() {
-    // we get a response if there is session data
+    // we get a response if there is session
     let results = {};
     axios({
       method: "get",
       url: `${API_PATH}/checkcurrentuser.php`,
-      headers: { "content-type": "application/json" },
+      headers: { "Content-type": "application/json" },
     })
       .then((response) => {
         if (response.data.status === 200) {
@@ -63,7 +77,7 @@ class ApiUtils {
     return axios({
       method: "get",
       url: `${API_PATH}/logout.php`,
-      headers: { "content-type": "application/json" },
+      headers: { "Content-type": "application/json" },
     });
   }
 
@@ -71,7 +85,7 @@ class ApiUtils {
     return axios({
       method: "get",
       url: `${LAPISHAGROUP_API_PATH}`,
-      headers: { "content-type": "application/json" },
+      headers: { "Content-type": "application/json" },
     });
   }
 }
