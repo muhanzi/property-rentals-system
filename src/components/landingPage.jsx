@@ -19,7 +19,13 @@ function LandingPage({ history }) {
       .getCurrentUser()
       .then((response) => {
         if (response.data.status === 200) {
-          dispatch(user_signed_in(response.data.session_data));
+          let user_data = {
+            id: response.data.session_data.user_id,
+            firstname: response.data.session_data.user_firstname,
+            lastname: response.data.session_data.user_lastname,
+            email: response.data.session_data.user_email,
+          };
+          dispatch(user_signed_in(user_data));
           history.push("/home");
         }
       })
