@@ -15,11 +15,17 @@ function LandingPage({ history }) {
   const apiUtils = new ApiUtils();
 
   useEffect(() => {
-    const results = apiUtils.getCurrentUser(); // returns an object
-    if (results.status === 200) {
-      dispatch(user_signed_in(results.user_data));
-      history.push("/home");
-    }
+    apiUtils
+      .getCurrentUser()
+      .then((response) => {
+        if (response.data.status === 200) {
+          dispatch(user_signed_in(response.data.session_data));
+          history.push("/home");
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   }, [apiUtils, history, dispatch]);
 
   return (
