@@ -20,27 +20,6 @@ class CardDesign extends Component {
     };
   }
 
-  double_room = {
-    property_id: "41",
-    property_name: "DefaultDouble",
-    description: "Category Double",
-    monthly_fee: "0",
-    featured_photo:
-      "https://nipashi.lapishagroup.com/app/v1/uploads/placeholder-3.png",
-    gallary_photos:
-      "https://nipashi.lapishagroup.com/app/v1/uploads/placeholder-3.png",
-    property_facilities: "In Default,,,,,,,,",
-    village: "Lapisha",
-    uploaded_at: "2020-03-09 19:19:57",
-    updated_at: "2020-3-17",
-    type_name: "Double",
-    location_name: "Munyonyo",
-    user_id: "22",
-    longtude: "32.6247428",
-    latitude: "0.2870831",
-    location_id: "3",
-  };
-
   showDetails = () => {
     this.setState({ showModal: true });
   };
@@ -70,7 +49,7 @@ class CardDesign extends Component {
               style={projectStyles().buttonStyle}
               onClick={this.showDetails}
             >
-              Show Detials
+              Show Details
             </MDBBtn>
           </MDBCardBody>
         </MDBCard>

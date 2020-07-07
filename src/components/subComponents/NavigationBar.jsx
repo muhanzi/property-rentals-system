@@ -117,35 +117,35 @@ function Navigation({ history }) {
     event.preventDefault();
     event.stopPropagation();
     setHiddenLoginLinearDeterminate(false);
-    //
     const user_credentials = {
       email: email,
       password: password,
     };
-    const results = apiUtils.login(user_credentials); // returns an object
-    if (results.status) {
-      if (results.status === 200) {
-        dispatch(user_signed_in(results.user_data));
-        history.push("/home");
+    apiUtils
+      .login(user_credentials)
+      .then((response) => {
+        if (response.data.status === 200) {
+          dispatch(user_signed_in(response.data.user_data));
+          history.push("/home");
+          setHiddenLoginLinearDeterminate(true);
+          setButtonText("Logout");
+          emptySignInForm();
+          hide_popup_window();
+        } else {
+          setHiddenLoginLinearDeterminate(true);
+          $("#loginWarningTextId").html(response.data.message);
+        }
+      })
+      .catch((error) => {
         setHiddenLoginLinearDeterminate(true);
-        setButtonText("Logout");
-        emptySignInForm();
-        hide_popup_window();
-      } else {
-        setHiddenLoginLinearDeterminate(true);
-        $("#loginWarningTextId").html(results.message);
-      }
-    } else {
-      setHiddenLoginLinearDeterminate(true);
-      $("#loginWarningTextId").html("An Error occurred");
-    }
+        $("#loginWarningTextId").html(error.message);
+      });
   };
 
   const performSignUp = (event) => {
     event.preventDefault();
     event.stopPropagation();
     setHiddenSignUpLinearDeterminate(false);
-    //
     const user_data = {
       firstname: addFirstName,
       lastname: addLastName,
@@ -161,18 +161,26 @@ function Navigation({ history }) {
             email: addEmail,
             password: addPassword,
           };
-          const results = apiUtils.login(user_credentials); // returns an object
-          if (results.status === 200) {
-            dispatch(user_signed_in(results.user_data));
-            history.push("/home");
-            setHiddenSignUpLinearDeterminate(true);
-            setButtonText("Logout");
-            emptySignUpForm();
-            hide_popup_window();
-          } else {
-            setHiddenSignUpLinearDeterminate(true);
-            $("#registrationWarningTextId").html(results.message);
-          }
+          //
+          apiUtils
+            .login(user_credentials)
+            .then((response) => {
+              if (response.data.status === 200) {
+                dispatch(user_signed_in(response.data.user_data));
+                history.push("/home");
+                setHiddenSignUpLinearDeterminate(true);
+                setButtonText("Logout");
+                emptySignUpForm();
+                hide_popup_window();
+              } else {
+                setHiddenSignUpLinearDeterminate(true);
+                $("#registrationWarningTextId").html(response.data.message);
+              }
+            })
+            .catch((error) => {
+              setHiddenSignUpLinearDeterminate(true);
+              $("#registrationWarningTextId").html(error.message);
+            });
           //
         } else {
           setHiddenSignUpLinearDeterminate(true);
@@ -186,6 +194,7 @@ function Navigation({ history }) {
         );
       });
   };
+
   const emptySignUpForm = () => {
     setAddFirstName("");
     setAddLastName("");
@@ -206,6 +215,7 @@ function Navigation({ history }) {
         if (response.data.status === 200) {
           dispatch(user_signed_out());
           history.push("/");
+          setButtonText("Login");
         } else {
           alert(response.data.message);
         }

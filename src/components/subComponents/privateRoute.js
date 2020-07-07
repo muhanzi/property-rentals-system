@@ -1,17 +1,17 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import ApiUtils from "../../apiCalls/APIUtils";
+import { useSelector } from "react-redux";
 
 // get all props of <PrivateRoute/>
 export const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const apiUtils = new ApiUtils();
-  const results = apiUtils.getCurrentUser();
+  // current value in the store //
+  const user_details = useSelector((state) => state.userSigning);
 
   return (
     <Route
       {...rest}
       render={(routeProps) => {
-        if (results.status === 200) {
+        if (user_details.email) {
           return <RouteComponent {...routeProps} />;
         } else {
           return <Redirect to={"/"} />;
